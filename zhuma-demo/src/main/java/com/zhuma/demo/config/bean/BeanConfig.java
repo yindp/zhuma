@@ -1,12 +1,12 @@
 package com.zhuma.demo.config.bean;
 
+import com.zm.zhuma.commons.attributes.mapper.AttributeMapper;
+import com.zm.zhuma.commons.attributes.service.AttributeService;
+import com.zm.zhuma.commons.attributes.service.impl.AttributeServiceImpl;
 import com.zm.zhuma.commons.web.aspect.RestControllerAspect;
 import com.zm.zhuma.commons.web.decoder.FeignErrorDecoder;
 import com.zm.zhuma.commons.web.handler.GlobalExceptionHandler;
 import com.zm.zhuma.commons.web.handler.ResponseResultHandler;
-import com.zm.zhuma.commons.web.interceptor.HeaderParamsCheckInterceptor;
-import com.zm.zhuma.commons.web.interceptor.LoginAuthInterceptor;
-import com.zm.zhuma.commons.web.interceptor.ResponseResultInterceptor;
 import com.zm.zhuma.user.token.service.impl.LoginTokenCacheServiceImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
@@ -36,4 +36,10 @@ public class BeanConfig {
     public ResponseResultHandler responseResultHandler() {
         return new ResponseResultHandler();
     }
+
+    @Bean
+	public AttributeService<String> userAttributeService(AttributeMapper<String> attributeDao) {
+		AttributeService<String> userAttributeService = new AttributeServiceImpl<>("user_attr", attributeDao, null);
+		return userAttributeService;
+	}
 }
